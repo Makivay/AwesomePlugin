@@ -8,7 +8,7 @@ import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import net.java.ao.Query;
 import ru.Makivay.ao.ElementEntity;
 import ru.Makivay.ao.models.ElementModel;
-import ru.Makivay.rest.models.answerGetModel;
+import ru.Makivay.rest.models.responseGetModel;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -43,7 +43,7 @@ public class OurAwesomeTableService {
             elementModels.add(new ElementModel(elementEntity));
         }
 
-        return Response.ok(new answerGetModel(elementModels.size(), elementModels)).build();
+        return Response.ok(new responseGetModel(elementModels.size(), elementModels)).build();
     }
 
     @PUT
@@ -74,6 +74,7 @@ public class OurAwesomeTableService {
             elementEntity.setAction(action);
             elementEntity.save();
         }
+
         return Response.ok(new ElementModel(elementEntity)).build();
     }
 

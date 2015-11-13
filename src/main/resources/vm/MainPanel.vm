@@ -2,7 +2,7 @@
 <head>
     <title>Лаборатория</title>
     <meta name="decorator" content="atl.user" />
-	$webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+	$webResourceManager.requireResourcesForContext("AwesomePlugin")
 </head>
 <body>
 

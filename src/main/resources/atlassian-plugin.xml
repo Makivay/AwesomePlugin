@@ -10,6 +10,13 @@
     <!-- add our i18n resource -->
     <resource type="i18n" name="i18n" location="AwesomePlugin"/>
 
+    <web-resource key="my-resources" name="testplugin Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>com.atlassian.auiplugin:aui-experimental-restfultable</dependency>
+        <resource type="download" name="images/" location="/images"/>
+        <context>AwesomePlugin</context>
+    </web-resource>
+
     <web-item key="main_button" name="Main Button" section="system.top.navigation.bar" weight="90">
         <label key="Лаборатория"/>
         <link>/secure/Laboratory.jspa</link>

@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Kmatveev on 13.11.2015.
  */
 @XmlRootElement
-public class answerGetModel {
+public class responseGetModel {
 
     @XmlElement
     public long size;
@@ -18,7 +18,7 @@ public class answerGetModel {
     @XmlElement
     public List<ElementModel> list;
 
-    public answerGetModel(long size, List<ElementModel> list) {
+    public responseGetModel(long size, List<ElementModel> list) {
         this.size = size;
         this.list = list;
     }
