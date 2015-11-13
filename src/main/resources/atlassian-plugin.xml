@@ -24,5 +24,8 @@
         </actions>
     </webwork1>
 
+    <rest key="rest-module" path="/awesomeplugin" version="1.0">
+        <description>Yes, this plugin realy use rest services.</description>
+    </rest>
 
 </atlassian-plugin>
