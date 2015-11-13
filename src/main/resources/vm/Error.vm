@@ -1,0 +1,6 @@
+<html>
+<head>
+    <title>Dashboard counter</title>
+    <meta name="decorator" content="atl.user" />
+	$webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+</head>
