@@ -28,4 +28,12 @@
         <description>Yes, this plugin realy use rest services.</description>
     </rest>
 
+    <ao key="ao-module">
+        <description>The module configuring the Active Objects service used by this plugin</description>
+        <entity>ru.Makivay.ao.ElementEntity</entity>
+    </ao>
+
+    <component-import key="ao" name="Active Objects service"
+                      interface="com.atlassian.activeobjects.external.ActiveObjects"/>
+
 </atlassian-plugin>
