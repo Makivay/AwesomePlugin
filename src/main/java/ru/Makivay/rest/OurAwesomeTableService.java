@@ -34,8 +34,9 @@ public class OurAwesomeTableService {
 
 
     @GET
+    @Path("/getAll")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getVersion(@PathParam("id") final String id) {
+    public Response getAll(){
         List<ElementModel> elementModels = new ArrayList<ElementModel>();
         ElementEntity[] elementEntities = activeObjects.find(ElementEntity.class);
 
@@ -43,7 +44,16 @@ public class OurAwesomeTableService {
             elementModels.add(new ElementModel(elementEntity));
         }
 
-        return Response.ok(new responseGetModel(elementModels.size(), elementModels)).build();
+        return Response.ok(elementModels).build();
+    }
+
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getVersion(@PathParam("id") final String id) {
+        ElementEntity elementEntity = activeObjects.find(ElementEntity.class, Query.select().where("ID = ?", id))[0];
+
+        return Response.ok(new ElementModel(elementEntity)).build();
     }
 
     @PUT
