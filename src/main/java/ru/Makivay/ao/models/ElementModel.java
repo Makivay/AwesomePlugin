@@ -4,7 +4,7 @@ import ru.Makivay.ao.ElementEntity;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Kmatveev on 13.11.2015.
@@ -31,5 +31,14 @@ public class ElementModel {
         this.string = elementEntity.getString();
         this.date = elementEntity.getDate();
         this.action = elementEntity.getAction();
+    }
+
+    @Override
+    public String toString() {
+        return "ElementModel{" +
+                "string='" + string + '\'' +
+                ", date=" + date +
+                ", action='" + action + '\'' +
+                '}';
     }
 }

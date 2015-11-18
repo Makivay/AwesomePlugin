@@ -1,0 +1,94 @@
+package ru.dellin.jira.plugins.sync.ao;
+
+import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import org.apache.commons.lang.RandomStringUtils;
+
+import javax.annotation.Nullable;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.Collection;
+
+/**
+ * Created by nusanovkornilov on 14.07.2015.
+ * Веб-сервис для редактирования данных о соответствии статусов ЦУП-Jira
+ */
+@Path("/statessync")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
+public class StatesSyncWebservice {
+    private StatesSyncService statesSyncService;
+    StatesSyncWebservice(StatesSyncServiceImpl statesSyncService){
+        this.statesSyncService = statesSyncService;
+    }
+
+    @AnonymousAllowed
+    @GET
+    @Path ("{id}")
+    public Response getStatesSyncMapping(@PathParam("id") final String id){
+        return Response.ok(StatesSyncEntityInputStruct.fromAO(statesSyncService.getById(id))).build();
+    }
+
+    @AnonymousAllowed
+    @GET
+    @Path ("/getAll")
+    public Response getAllStatesSyncMapping(){
+        Collection<StatesSyncEntityInputStruct> results = Collections2.transform(statesSyncService.getAll(), new Function<StatesSyncEntity, StatesSyncEntityInputStruct>() {
+            @Nullable
+            @Override
+            public StatesSyncEntityInputStruct apply(StatesSyncEntity input) {
+                return StatesSyncEntityInputStruct.fromAO(input);
+            }
+        });
+        return Response.ok(results).build();
+    }
+
+    @PUT
+    @Path ("{id}")
+    public Response updateStatesSyncMapping(@PathParam ("id") final String id, final StatesSyncEntityInputStruct bean){
+        System.out.println("PUT   " + id + "   " + bean.toString());
+        boolean res=statesSyncService.update(bean);
+        if (res) {
+            StatesSyncEntityInputStruct struc = StatesSyncEntityInputStruct.fromAO(statesSyncService.getById(id));
+            System.out.println("result: " + id + ", " + bean.toString());
+            return Response.ok(struc).build();
+        }
+        else
+            return Response.serverError().build();
+    }
+
+    @POST
+    public Response createStatesSyncMappingPost(final StatesSyncEntityInputStruct bean){
+        bean.setId(RandomStringUtils.random(16, true, true));
+        System.out.println("POST   " +bean.toString());
+        boolean res=statesSyncService.create(bean);
+        if (res)
+            return Response.ok(bean).build();
+        else
+            return Response.serverError().build();
+    }
+
+
+
+
+    @DELETE
+    @Path ("{id}")
+    public Response delete(@PathParam ("id") final String id){
+        boolean res=statesSyncService.removeOne(id);
+        if (res)
+            return Response.ok().build();
+        else
+            return Response.serverError().build();
+    }
+
+    @GET
+    @Path("/clearTable")
+    public  Response deleteAll(){
+        statesSyncService.removeAll();
+        return Response.ok().build();
+    }
+
+
+}

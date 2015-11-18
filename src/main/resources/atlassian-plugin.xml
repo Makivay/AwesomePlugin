@@ -17,10 +17,10 @@
         <context>AwesomePlugin</context>
     </web-resource>
 
-    <web-item key="main_button" name="Main Button" section="system.top.navigation.bar" weight="90">
-        <label key="Лаборатория"/>
-        <link>/secure/Laboratory.jspa</link>
-    </web-item>
+    <!--<web-item key="main_button" name="Main Button" section="system.top.navigation.bar" weight="90">-->
+    <!--<label key="Лаборатория"/>-->
+    <!--<link>/secure/Laboratory.jspa</link>-->
+    <!--</web-item>-->
 
     <webwork1 key="AwesomnesMainPanel" name="AwesomnesMainPanel" i18n-name-key="AwesomnesMainPanel">
         <actions>

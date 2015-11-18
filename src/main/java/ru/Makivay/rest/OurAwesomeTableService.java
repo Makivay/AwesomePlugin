@@ -8,7 +8,6 @@ import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import net.java.ao.Query;
 import ru.Makivay.ao.ElementEntity;
 import ru.Makivay.ao.models.ElementModel;
-import ru.Makivay.rest.models.responseGetModel;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -36,14 +35,12 @@ public class OurAwesomeTableService {
     @GET
     @Path("/getAll")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getAll(){
+    public Response getAll() {
         List<ElementModel> elementModels = new ArrayList<ElementModel>();
         ElementEntity[] elementEntities = activeObjects.find(ElementEntity.class);
-
         for (ElementEntity elementEntity : elementEntities) {
             elementModels.add(new ElementModel(elementEntity));
         }
-
         return Response.ok(elementModels).build();
     }
 
@@ -59,6 +56,11 @@ public class OurAwesomeTableService {
     @PUT
     @Path("/{id}")
     public Response updateVersion(@PathParam("id") final String idString, String request) {
+        StringBuilder answer = new StringBuilder();     //TODO: remove after test
+        answer.append(idString);
+        answer.append('|');
+        answer.append(request);
+        answer.append('|');                             //TODO: remove after test
 
         String string;
         Date date;
@@ -77,15 +79,23 @@ public class OurAwesomeTableService {
             action = null;
         }
 
-        ElementEntity elementEntity = activeObjects.find(ElementEntity.class, Query.select().where("ID=?", id))[0];
-        if (elementEntity != null) {
-            elementEntity.setString(string);
-            elementEntity.setDate(date);
-            elementEntity.setAction(action);
-            elementEntity.save();
+        ElementEntity[] elementEntities = activeObjects.find(ElementEntity.class, Query.select().where("ID=?", id));
+        ElementEntity elementEntity;
+        if (elementEntities != null) {
+            if (elementEntities.length > 0) {
+                elementEntity = elementEntities[0];
+            } else {
+                elementEntity = activeObjects.create(ElementEntity.class);
+            }
+        } else {
+            elementEntity = activeObjects.create(ElementEntity.class);
         }
-
-        return Response.ok(new ElementModel(elementEntity)).build();
+        elementEntity.setString(string);
+        elementEntity.setDate(date);
+        elementEntity.setAction(action);
+        elementEntity.save();
+        answer.append(new ElementModel(elementEntity).toString()); //TODO: remove after test
+        return Response.ok(answer.toString()).build();
     }
 
     @POST
@@ -119,6 +129,7 @@ public class OurAwesomeTableService {
 
     @DELETE
     @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") final String idStrem) {
 
         long id = Long.valueOf(idStrem);

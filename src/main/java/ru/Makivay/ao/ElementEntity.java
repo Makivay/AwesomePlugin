@@ -3,7 +3,7 @@ package ru.Makivay.ao;
 import net.java.ao.Entity;
 import net.java.ao.Preload;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Kmatveev on 12.11.2015.

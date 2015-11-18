@@ -2,7 +2,7 @@
 <head>
     <title>Лаборатория</title>
     <meta name="decorator" content="atl.user" />
-	$webResourceManager.requireResourcesForContext("AwesomePlugin")
+	$webResourceManager.requireResource("ru.Makivay.AwesomePlugin:my-resources")
 </head>
 <body>
 
