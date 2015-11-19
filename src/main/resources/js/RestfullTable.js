@@ -1,17 +1,25 @@
-    var resourcePath = AJS.contextPath() + "/rest/awesomeplugin/latest/oat";
-    var elements = "";
-    jQuery().get(resourcePath, function(resp){
-        elements = resp;
-    });
+function getLink(){
+    return AJS.RestfulTable.CustomReadView.extend({
+        render:function(self){
+            if (self !== undefined){
+                this.el.innerHTML = "<input class=\"aui-date-picker\" id=\"demo-range-always\" type=\"date\" value =\"" + self.value + "\" />";
+                }
+            return this.el;
+        }
+    })
+}
 
-    var restfulTable = new AJS.RestfulTable({
-        autoFocus: true,
-        el: elements,
-        editable: true,
-        allowReorder: true,
+jQuery(document).ready(function(){
+    var rt = new AJS.RestfulTable({
+        allowCreate: true,
+        allowEdit: false,
+        allowReorder: false,
+        allowDelete: false,
+        reverseOrder: true,
+        el: jQuery('.restful'),
         resources: {
-            all: resourcePath,
-            self: resourcePath
+            all: AJS.contextPath()+"/rest/awesomeplugin/latest/oat/getAll",
+            self: AJS.contextPath()+"/rest/awesomeplugin/latest/oat/"
         },
         columns: [
             {
@@ -20,7 +28,8 @@
             },
             {
                 id: "date",
-                header: "Date"
+                header: "Date",
+                readView: getLink()
             },
             {
                 id: "action",
@@ -28,3 +37,4 @@
             }
         ]
     });
+})

@@ -48,7 +48,12 @@ public class OurAwesomeTableService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getVersion(@PathParam("id") final String id) {
-        ElementEntity elementEntity = activeObjects.find(ElementEntity.class, Query.select().where("ID = ?", id))[0];
+        ElementEntity elementEntity;
+        if (id != null) {
+            elementEntity = activeObjects.find(ElementEntity.class, Query.select().where("ID = ?", id))[0];
+        } else {
+            return Response.serverError().build();
+        }
 
         return Response.ok(new ElementModel(elementEntity)).build();
     }

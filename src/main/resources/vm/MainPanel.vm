@@ -25,6 +25,8 @@
         </div>
         <div class="tabs-pane" id="tabs-second-task">
             <h3>Second</h3>
+            <table class='restful'>
+            </table>
         </div>
         <div class="tabs-pane" id="tabs-third-task">
             <h3>Third</h3>

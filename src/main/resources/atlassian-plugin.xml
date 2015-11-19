@@ -14,6 +14,8 @@
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         <dependency>com.atlassian.auiplugin:aui-experimental-restfultable</dependency>
         <resource type="download" name="images/" location="/images"/>
+        <resource type="download" name="RestfullTable.js" location="/js/RestfullTable.js"/>
+        <resource type="download" name="jquery.livequery.min.js" location="/js/jquery.livequery.min.js"/>
         <context>AwesomePlugin</context>
     </web-resource>
 
