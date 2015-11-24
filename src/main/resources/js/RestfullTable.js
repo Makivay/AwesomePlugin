@@ -9,14 +9,25 @@ function getLink(){
     })
 }
 
-jQuery(document).ready(function(){
-    var rt = new AJS.RestfulTable({
+function getDate(){
+    return AJS.RestfulTable.CustomReadView.extend({
+        render:function(self){
+            if (self !== undefined){
+                this.el.innerHTML = "<input class=\"aui-date-picker\" id=\"demo-range-always\" type=\"date\" value =\"" + self.value + "\" />";
+                }
+            return this.el;
+        }
+    })
+}
+
+function addTable(target){
+    new AJS.RestfulTable({
         allowCreate: true,
         allowEdit: false,
         allowReorder: false,
         allowDelete: false,
         reverseOrder: true,
-        el: jQuery('.restful'),
+        el: target,
         resources: {
             all: AJS.contextPath()+"/rest/awesomeplugin/latest/oat/getAll",
             self: AJS.contextPath()+"/rest/awesomeplugin/latest/oat/"
@@ -29,7 +40,6 @@ jQuery(document).ready(function(){
             {
                 id: "date",
                 header: "Date",
-                readView: getLink()
             },
             {
                 id: "action",
@@ -37,4 +47,10 @@ jQuery(document).ready(function(){
             }
         ]
     });
-})
+}
+
+
+jQuery(document).ready(function(){
+    var target = jQuery('.restful');
+    addTable(target);
+});

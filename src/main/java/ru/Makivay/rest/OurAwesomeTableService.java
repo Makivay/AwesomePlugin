@@ -46,6 +46,7 @@ public class OurAwesomeTableService {
 
 
     @GET
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getVersion(@PathParam("id") final String id) {
         ElementEntity elementEntity;
@@ -60,6 +61,7 @@ public class OurAwesomeTableService {
 
     @PUT
     @Path("/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response updateVersion(@PathParam("id") final String idString, String request) {
         StringBuilder answer = new StringBuilder();     //TODO: remove after test
         answer.append(idString);
