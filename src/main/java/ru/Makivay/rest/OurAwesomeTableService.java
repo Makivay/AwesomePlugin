@@ -12,7 +12,6 @@ import ru.Makivay.ao.models.ElementModel;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,27 +61,29 @@ public class OurAwesomeTableService {
     @PUT
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response updateVersion(@PathParam("id") final String idString, String request) {
-        StringBuilder answer = new StringBuilder();     //TODO: remove after test
-        answer.append(idString);
-        answer.append('|');
-        answer.append(request);
-        answer.append('|');                             //TODO: remove after test
+    public Response updateVersion(@PathParam("id") String idString, String request) throws Exception {
 
         String string;
-        Date date;
+        String date;
         String action;
+        int id;
 
-        long id = Long.parseLong(idString);
-        JSONObject jsonObject;
+        JSONObject jsonObject = new JSONObject(request);
+
+        id = jsonObject.getInt("id");
         try {
-            jsonObject = new JSONObject(request);
             string = jsonObject.getString("string");
-            date = Date.valueOf(jsonObject.getString("date"));
-            action = jsonObject.getString("action");
         } catch (JSONException ex) {
             string = null;
+        }
+        try {
+            date = jsonObject.getString("date");
+        } catch (JSONException ex) {
             date = null;
+        }
+        try {
+            action = jsonObject.getString("action");
+        } catch (JSONException ex) {
             action = null;
         }
 
@@ -97,31 +98,42 @@ public class OurAwesomeTableService {
         } else {
             elementEntity = activeObjects.create(ElementEntity.class);
         }
-        elementEntity.setString(string);
-        elementEntity.setDate(date);
-        elementEntity.setAction(action);
+        if (string != null) {
+            elementEntity.setString(string);
+        }
+        if (date != null) {
+            elementEntity.setDate(date);
+        }
+        if (action != null) {
+            elementEntity.setAction(action);
+        }
         elementEntity.save();
-        answer.append(new ElementModel(elementEntity).toString()); //TODO: remove after test
-        return Response.ok(answer.toString()).build();
+        return Response.ok(new ElementModel(elementEntity)).build();
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response createVersion(final String request) {
+    public Response createVersion(final String request) throws Exception {
 
         String string;
-        Date date;
+        String date;
         String action;
-        JSONObject jsonObject;
+        JSONObject jsonObject = new JSONObject(request.substring(request.indexOf("{")));
+
         try {
-            jsonObject = new JSONObject(request);
             string = jsonObject.getString("string");
-            date = Date.valueOf(jsonObject.getString("date"));
-            action = jsonObject.getString("action");
         } catch (JSONException ex) {
             string = null;
+        }
+        try {
+            date = jsonObject.getString("date");
+        } catch (JSONException ex) {
             date = null;
+        }
+        try {
+            action = jsonObject.getString("action");
+        } catch (JSONException ex) {
             action = null;
         }
 

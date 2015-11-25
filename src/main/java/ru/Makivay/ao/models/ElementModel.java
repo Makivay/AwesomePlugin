@@ -4,7 +4,6 @@ import ru.Makivay.ao.ElementEntity;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 
 /**
  * Created by Kmatveev on 13.11.2015.
@@ -13,32 +12,28 @@ import java.util.Date;
 public class ElementModel {
 
     @XmlElement
+    int id;
+
+    @XmlElement
     String string;
 
     @XmlElement
-    Date date;
+    String date;
 
     @XmlElement
     String action;
 
-    public ElementModel(String string, Date date, String action) {
+    public ElementModel(int id, String string, String date, String action) {
+        this.id = id;
         this.string = string;
         this.date = date;
         this.action = action;
     }
 
     public ElementModel(ElementEntity elementEntity) {
+        this.id = elementEntity.getID();
         this.string = elementEntity.getString();
         this.date = elementEntity.getDate();
         this.action = elementEntity.getAction();
-    }
-
-    @Override
-    public String toString() {
-        return "ElementModel{" +
-                "string='" + string + '\'' +
-                ", date=" + date +
-                ", action='" + action + '\'' +
-                '}';
     }
 }

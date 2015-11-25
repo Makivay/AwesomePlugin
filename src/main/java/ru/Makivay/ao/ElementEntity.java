@@ -3,8 +3,6 @@ package ru.Makivay.ao;
 import net.java.ao.Entity;
 import net.java.ao.Preload;
 
-import java.util.Date;
-
 /**
  * Created by Kmatveev on 12.11.2015.
  */
@@ -16,9 +14,9 @@ public interface ElementEntity extends Entity {
 
     void setString(String string);
 
-    Date getDate();
+    String getDate();
 
-    void setDate(Date date);
+    void setDate(String date);
 
     String getAction();
 

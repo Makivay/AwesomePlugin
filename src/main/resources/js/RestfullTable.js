@@ -23,9 +23,9 @@ function getDate(){
 function addTable(target){
     new AJS.RestfulTable({
         allowCreate: true,
-        allowEdit: false,
+        allowEdit: true,
         allowReorder: false,
-        allowDelete: false,
+        allowDelete: true,
         reverseOrder: true,
         el: target,
         resources: {
